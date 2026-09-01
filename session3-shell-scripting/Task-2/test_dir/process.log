@@ -1,0 +1,176 @@
+    PID TTY          TIME CMD
+   3768 ?        00:00:09 systemd
+   3774 ?        00:00:00 (sd-pam)
+   3797 ?        00:03:52 pipewire
+   3798 ?        00:00:00 pipewire
+   3801 ?        00:04:56 wireplumber
+   3802 ?        00:09:12 pipewire-pulse
+   3804 ?        00:00:05 gnome-keyring-d
+   3813 ?        00:00:39 dbus-daemon
+   3844 ?        00:00:05 xdg-document-po
+   3855 ?        00:00:00 xdg-permission-
+   4011 ?        00:00:00 gcr-ssh-agent
+   4017 ?        00:00:00 gnome-session-c
+   4033 ?        00:00:12 gvfsd
+   4044 ?        00:00:00 gvfsd-fuse
+   4048 ?        00:00:10 gnome-session-b
+   4082 ?        00:00:00 at-spi-bus-laun
+   4083 ?        03:00:03 gnome-shell
+   4096 ?        00:00:00 dbus-daemon
+   4182 ?        00:00:02 at-spi2-registr
+   4212 ?        00:00:00 gnome-shell-cal
+   4220 ?        00:00:00 evolution-sourc
+   4226 ?        00:00:00 gjs
+   4246 ?        00:01:24 ibus-daemon
+   4247 ?        00:00:02 gsd-a11y-settin
+   4248 ?        00:00:03 gsd-color
+   4249 ?        00:00:02 gsd-datetime
+   4250 ?        00:00:06 gsd-housekeepin
+   4251 ?        00:00:02 gsd-keyboard
+   4253 ?        00:00:11 gsd-media-keys
+   4255 ?        00:00:08 gsd-power
+   4258 ?        00:00:02 gsd-print-notif
+   4267 ?        00:00:02 gsd-rfkill
+   4269 ?        00:00:05 gsd-screensaver
+   4270 ?        00:00:08 gsd-sharing
+   4274 ?        00:00:02 gsd-smartcard
+   4277 ?        00:00:02 gsd-sound
+   4282 ?        00:00:02 gsd-wacom
+   4326 ?        00:00:00 gsd-disk-utilit
+   4329 ?        00:01:29 gnome-software
+   4333 ?        00:00:00 evolution-alarm
+   4344 ?        00:00:09 blueman-applet
+   4405 ?        00:00:00 ibus-dconf
+   4410 ?        00:00:15 ibus-extension-
+   4418 ?        00:00:05 ibus-portal
+   4457 ?        00:00:03 gvfs-udisks2-vo
+   4465 ?        00:00:00 gsd-printer
+   4472 ?        00:00:14 snap-store
+   4478 ?        00:00:00 goa-daemon
+   4488 ?        00:00:04 gvfs-afc-volume
+   4505 ?        00:00:08 goa-identity-se
+   4521 ?        00:00:00 gvfs-mtp-volume
+   4525 ?        00:00:00 evolution-calen
+   4536 ?        00:00:00 gvfs-gphoto2-vo
+   4552 ?        00:00:00 gvfs-goa-volume
+   4566 ?        00:00:00 evolution-addre
+   4601 ?        00:00:00 dconf-service
+   4607 ?        00:00:32 ibus-engine-sim
+   4628 ?        00:00:00 gvfsd-trash
+   4676 ?        00:00:19 tracker-miner-f
+   4679 ?        00:00:11 xdg-desktop-por
+   4690 ?        00:00:30 xdg-desktop-por
+   4704 ?        00:00:00 obexd
+   4706 ?        00:01:52 blueman-tray
+   4709 ?        00:00:00 gjs
+   4765 ?        00:00:05 xdg-desktop-por
+   4874 ?        00:00:00 gvfsd-metadata
+   5051 ?        01:00:13 chrome
+   5057 ?        00:00:00 cat
+   5058 ?        00:00:00 cat
+   5060 ?        00:00:00 chrome_crashpad
+   5062 ?        00:00:00 chrome_crashpad
+   5070 ?        00:00:00 chrome
+   5071 ?        00:00:00 chrome
+   5073 ?        00:00:05 chrome
+   5108 ?        00:00:00 user-session-he
+   5112 ?        01:00:36 chrome
+   5114 ?        00:17:19 chrome
+   5120 ?        00:00:06 Xwayland
+   5176 ?        00:00:43 chrome
+   5216 ?        00:00:00 snapd-desktop-i
+   5221 ?        00:00:05 gsd-xsettings
+   5281 ?        00:00:00 ibus-x11
+   5290 ?        00:00:02 mutter-x11-fram
+   5344 ?        00:00:04 chrome
+   5347 ?        00:00:07 chrome
+   5458 ?        00:00:00 gnome-browser-c
+   6428 ?        00:11:41 chrome
+   6843 ?        00:05:45 chrome
+   8321 ?        00:00:00 brave-browser-s
+   8327 ?        00:00:00 cat
+   8328 ?        00:00:00 cat
+   8329 ?        00:53:32 brave
+   8332 ?        00:00:00 chrome_crashpad
+   8334 ?        00:00:00 chrome_crashpad
+   8342 ?        00:00:00 brave
+   8343 ?        00:00:00 chrome-sandbox
+   8344 ?        00:00:00 brave
+   8346 ?        00:00:00 brave
+   8377 ?        02:17:09 brave
+   8383 ?        00:07:25 brave
+   8421 ?        00:00:58 brave
+   8552 ?        00:10:57 brave
+   8642 ?        00:08:24 brave
+   8882 ?        00:48:44 chrome
+   8904 ?        00:00:02 update-notifier
+   8958 ?        00:09:22 brave
+  90652 ?        00:00:11 gvfsd-network
+  90661 ?        00:00:05 gvfsd-dnssd
+  93883 ?        00:00:00 ssh-agent
+ 141648 ?        00:00:04 brave
+ 142295 ?        00:00:01 gvfsd-recent
+ 197534 ?        00:00:03 albert
+ 596717 ?        00:00:05 chrome
+ 613809 ?        00:00:06 chrome
+ 864326 ?        00:03:59 chrome
+ 864474 ?        00:01:18 chrome
+ 864615 ?        00:00:10 chrome
+ 870617 ?        01:09:07 chrome
+ 870893 ?        00:00:07 chrome
+ 870901 ?        00:00:08 chrome
+ 870917 ?        00:00:26 chrome
+ 870942 ?        00:00:02 chrome
+ 870967 ?        00:00:03 chrome
+ 870989 ?        00:06:19 chrome
+ 871002 ?        00:00:14 chrome
+ 871047 ?        00:00:15 chrome
+ 871060 ?        00:08:55 chrome
+ 871079 ?        00:05:53 chrome
+ 871095 ?        00:00:06 chrome
+ 871309 ?        00:00:53 chrome
+ 871360 ?        00:00:55 chrome
+ 871431 ?        00:00:01 chrome
+ 871594 ?        00:00:01 chrome
+ 871794 ?        00:00:00 chrome
+ 871802 ?        00:00:01 chrome
+ 886499 ?        00:00:13 chrome
+ 886621 ?        00:00:02 chrome
+ 886760 ?        00:00:01 chrome
+ 886790 ?        00:02:48 chrome
+ 935074 ?        00:06:05 brave
+ 980194 ?        00:00:54 chrome
+1080278 ?        00:00:03 chrome
+1126420 ?        00:00:03 gjs
+1182738 ?        00:00:13 chrome
+1182802 ?        00:00:12 chrome
+1183729 ?        00:00:24 antigravity-ide
+1183734 ?        00:00:00 antigravity-ide
+1183735 ?        00:00:00 chrome-sandbox
+1183736 ?        00:00:00 antigravity-ide
+1183738 ?        00:00:00 antigravity-ide
+1183755 ?        00:00:00 chrome_crashpad
+1183771 ?        00:00:25 antigravity-ide
+1183783 ?        00:00:02 antigravity-ide
+1183827 ?        00:01:42 antigravity-ide
+1183858 ?        00:00:11 language_server
+1183892 ?        00:00:00 antigravity-ide
+1183904 ?        00:00:05 antigravity-ide
+1183919 ?        00:00:02 antigravity-ide
+1183920 ?        00:00:01 antigravity-ide
+1183949 ?        00:00:19 antigravity-ide
+1184043 ?        00:00:00 antigravity-ide
+1184784 ?        00:00:02 language_server
+1184821 ?        00:00:01 npm exec chrome
+1184832 ?        00:00:00 sh
+1184833 ?        00:00:00 chrome-devtools
+1185618 ?        00:00:04 chrome
+1188611 ?        00:00:00 brave
+1189426 ?        00:00:00 antigravity-ide
+1195500 ?        00:00:00 antigravity-ide
+1202644 ?        00:00:00 chrome
+1202672 ?        00:00:00 chrome
+1204348 ?        00:00:00 chrome
+1204918 ?        00:00:00 bash
+1204921 ?        00:00:00 script.sh
+1204928 ?        00:00:00 ps
