@@ -5,50 +5,38 @@
 
 ---
 
-## Steps to Run Cloned Multi-Stage Repository
+## Steps Done
 
-1. Navigate into the cloned repository:
+1. Navigated into the cloned repository:
    ```bash
    cd ~/Desktop/Devops-Practice/session6-7-docker/multi-stage-dockerfile
    ```
 
-2. Build the Docker image from the multi-stage Dockerfile:
+2. Built the Docker image using multi-stage Dockerfile:
    ```bash
    docker build -t multi-stage-app .
    ```
 
-3. Run the container mapping host port 8080 to container port 3000:
+3. Ran container on host port 8080 mapping to container port 3000:
    ```bash
    docker run -d --name my-multistage-app -p 8080:3000 multi-stage-app
    ```
 
 ---
 
-## Verification & Output
+## Outputs & Verification
 
 ### 1. Web Output Check
-Command:
-```bash
-curl http://localhost:8080
-```
-Output:
+![Browser Web Output](./browser-output.png)
+
 ```html
-<h1>Hello World from Docker Multi-Stage Build!</h1>
+Hello World from Docker Multi-Stage Build!
 ```
 
-### 2. Docker PS Check (Port 8080)
-Command:
-```bash
-docker ps
-```
-Output:
+### 2. Docker PS & Terminal Output
+![Terminal Docker PS Screenshot](./terminal-docker-ps.png)
+
 ```text
-CONTAINER ID   IMAGE             COMMAND                  CREATED         STATUS         PORTS                                         NAMES
-3a2c6a5090d5   multi-stage-app   "docker-entrypoint.s…"   4 seconds ago   Up 3 seconds   0.0.0.0:8080->3000/tcp, [::]:8080->3000/tcp   my-multistage-app
+CONTAINER ID   IMAGE             COMMAND                  CREATED          STATUS          PORTS                                         NAMES
+7213eb5a15db   multi-stage-app   "docker-entrypoint.s…"   19 seconds ago   Up 19 seconds   0.0.0.0:8080->3000/tcp, [::]:8080->3000/tcp   my-multistage-app
 ```
-
----
-
-## Screenshot
-
-![Task 2 Screenshot](./screenshot.png)
