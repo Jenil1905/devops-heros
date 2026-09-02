@@ -5,46 +5,46 @@
 
 ---
 
-## Steps Done
+## Steps to Run Cloned Multi-Stage Repository
 
-1. Created a multi-stage Dockerfile using `node:18-alpine`.
-   - Stage 1 (build stage) installs app dependencies.
-   - Stage 2 (production stage) copies the built server files and runs the lightweight app.
-
-2. Built the multi-stage docker image:
+1. Navigate into the cloned repository:
    ```bash
-   docker build -t multistage-app .
+   cd ~/Desktop/Devops-Practice/session6-7-docker/multi-stage-dockerfile
    ```
 
-3. Started the container on port 8080:
+2. Build the Docker image from the multi-stage Dockerfile:
    ```bash
-   docker run -d --name multistage-container -p 8080:8080 multistage-app
+   docker build -t multi-stage-app .
+   ```
+
+3. Run the container mapping host port 8080 to container port 3000:
+   ```bash
+   docker run -d --name my-multistage-app -p 8080:3000 multi-stage-app
    ```
 
 ---
 
-## Outputs & Verification
+## Verification & Output
 
-### 1. App Output Check
+### 1. Web Output Check
+Command:
 ```bash
 curl http://localhost:8080
 ```
 Output:
-```text
-Hello World from Docker multi-stage build
+```html
+<h1>Hello World from Docker Multi-Stage Build!</h1>
 ```
 
-### 2. Docker PS Container Check (Port 8080)
+### 2. Docker PS Check (Port 8080)
+Command:
 ```bash
 docker ps
 ```
 Output:
 ```text
-CONTAINER ID   IMAGE                     COMMAND                  CREATED              STATUS                PORTS                                         NAMES
-fe72a7919486   multistage-app            "docker-entrypoint.s…"   About a minute ago   Up About a minute     0.0.0.0:8080->8080/tcp, [::]:8080->8080/tcp   multistage-container
-7eef9ffd1ddd   searchtypehead_frontend   "/docker-entrypoint.…"   2 months ago         Up 4 days             0.0.0.0:8081->80/tcp, [::]:8081->80/tcp       typeahead_frontend
-18065d547dbf   postgres:15-alpine        "docker-entrypoint.s…"   2 months ago         Up 4 days (healthy)   0.0.0.0:5432->5432/tcp, [::]:5432->5432/tcp   typeahead_postgres
-84e2fe1b93d5   redis:7-alpine            "docker-entrypoint.s…"   2 months ago         Up 4 days (healthy)   0.0.0.0:6379->6379/tcp, [::]:6379->6379/tcp   typeahead_redis
+CONTAINER ID   IMAGE             COMMAND                  CREATED         STATUS         PORTS                                         NAMES
+3a2c6a5090d5   multi-stage-app   "docker-entrypoint.s…"   4 seconds ago   Up 3 seconds   0.0.0.0:8080->3000/tcp, [::]:8080->3000/tcp   my-multistage-app
 ```
 
 ---
