@@ -40,8 +40,11 @@ docker ps
 ```
 Output:
 ```text
-CONTAINER ID   IMAGE            COMMAND                  CREATED         STATUS         PORTS                                         NAMES
-fe72a7919486   multistage-app   "docker-entrypoint.s…"   3 seconds ago   Up 3 seconds   0.0.0.0:8080->8080/tcp, [::]:8080->8080/tcp   multistage-container
+CONTAINER ID   IMAGE                     COMMAND                  CREATED              STATUS                PORTS                                         NAMES
+fe72a7919486   multistage-app            "docker-entrypoint.s…"   About a minute ago   Up About a minute     0.0.0.0:8080->8080/tcp, [::]:8080->8080/tcp   multistage-container
+7eef9ffd1ddd   searchtypehead_frontend   "/docker-entrypoint.…"   2 months ago         Up 4 days             0.0.0.0:8081->80/tcp, [::]:8081->80/tcp       typeahead_frontend
+18065d547dbf   postgres:15-alpine        "docker-entrypoint.s…"   2 months ago         Up 4 days (healthy)   0.0.0.0:5432->5432/tcp, [::]:5432->5432/tcp   typeahead_postgres
+84e2fe1b93d5   redis:7-alpine            "docker-entrypoint.s…"   2 months ago         Up 4 days (healthy)   0.0.0.0:6379->6379/tcp, [::]:6379->6379/tcp   typeahead_redis
 ```
 
 ---
