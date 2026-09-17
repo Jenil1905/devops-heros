@@ -341,3 +341,26 @@ kubectl exec headless-dns-client -- curl -s http://web-stateful-0.web-service-he
 | **LoadBalancer** | Yes (Internal VIP + Cloud LB IP) | External Public IP / DNS | Internet-facing cloud applications |
 | **ExternalName** | No (DNS CNAME record only) | External FQDN (e.g. RDS/API) | Referencing outside databases/APIs without code changes |
 | **Headless** | **No** (`clusterIP: None`) | Direct Pod IPs & FQDNs | Stateful clustered databases (Kafka, Mongo, Redis) |
+
+---
+
+## All 5 Active Services (`kubectl get svc`)
+
+```bash
+kubectl get svc
+```
+
+### Output
+```text
+NAME                        TYPE           CLUSTER-IP       EXTERNAL-IP      PORT(S)        AGE
+external-database-service   ExternalName   <none>           api.github.com   <none>         14m
+kubernetes                  ClusterIP      10.96.0.1        <none>           443/TCP        9d
+web-service-clusterip       ClusterIP      10.98.185.166    <none>           8080/TCP       15m
+web-service-headless        ClusterIP      None             <none>           80/TCP         13m
+web-service-loadbalancer    LoadBalancer   10.106.30.177    <pending>        80:31807/TCP   14m
+web-service-nodeport        NodePort       10.110.238.215   <none>           80:30080/TCP   14m
+```
+
+### All Services Screenshot
+![All 5 Services Active Output](./screenshots/all-services.png)
+
