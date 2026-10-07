@@ -15,29 +15,56 @@ env:
 
 jobs:
   test:
-    name: Run Automated Tests
+    name: 1. Automated Testing (Pytest & Frontend)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+
       - name: Install backend dependencies
         run: pip install -r requirements.txt
         working-directory: session21-python/backend
-      - name: Run backend tests
+
+      - name: Run Pytest test suite
         run: pytest -v
         working-directory: session21-python/backend
-      - uses: actions/setup-node@v4
+
+      - name: Set up Node.js 22
+        uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Build frontend
+
+      - name: Build React frontend
         run: npm install && npm run build
         working-directory: session21-python/frontend
 
-  build-scan-push:
-    name: Build, Scan & Push Images
+  security-scan:
+    name: 2. DevSecOps (Trivy Security Scan)
     needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build local container images for scanning
+        run: |
+          docker build -t taskboard-backend:scan ./session21-python/backend
+          docker build -t taskboard-frontend:scan ./session21-python/frontend
+
+      - name: Run Trivy Vulnerability Scan (Backend)
+        run: |
+          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy:latest image --severity HIGH,CRITICAL --exit-code 0 taskboard-backend:scan
+
+      - name: Run Trivy Vulnerability Scan (Frontend)
+        run: |
+          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy:latest image --severity HIGH,CRITICAL --exit-code 0 taskboard-frontend:scan
+
+  build-and-push:
+    name: 3. Container Build & Push (GHCR)
+    needs: security-scan
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -51,26 +78,42 @@ jobs:
         env:
           OWNER: '${{ github.repository_owner }}'
 
-      - uses: docker/login-action@v3
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build backend & frontend images
+      - name: Build and tag images with Git commit SHA
         run: |
           docker build -t ghcr.io/${{ env.OWNER_LC }}/taskboard-backend:${{ github.sha }} ./session21-python/backend
           docker build -t ghcr.io/${{ env.OWNER_LC }}/taskboard-frontend:${{ github.sha }} ./session21-python/frontend
 
-      - name: Security Scan Backend with Trivy
-        run: |
-          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy:latest image --severity HIGH,CRITICAL --exit-code 0 ghcr.io/${{ env.OWNER_LC }}/taskboard-backend:${{ github.sha }}
-
-      - name: Security Scan Frontend with Trivy
-        run: |
-          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy:latest image --severity HIGH,CRITICAL --exit-code 0 ghcr.io/${{ env.OWNER_LC }}/taskboard-frontend:${{ github.sha }}
-
-      - name: Push images to GitHub Container Registry
+      - name: Push images to GHCR
         run: |
           docker push ghcr.io/${{ env.OWNER_LC }}/taskboard-backend:${{ github.sha }}
           docker push ghcr.io/${{ env.OWNER_LC }}/taskboard-frontend:${{ github.sha }}
+
+  deploy:
+    name: 4. Kubernetes & Helm Deployment
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Helm
+        uses: azure/setup-helm@v4
+
+      - name: Lint Helm Chart
+        run: |
+          helm lint ./session21-python/helm/taskboard
+
+      - name: Validate Kubernetes Manifests & Dry-run
+        run: |
+          helm template taskboard ./session21-python/helm/taskboard \
+            --set backend.tag=${{ github.sha }} \
+            --set frontend.tag=${{ github.sha }} \
+            --set backend.image=ghcr.io/${{ github.repository_owner }}/taskboard-backend \
+            --set frontend.image=ghcr.io/${{ github.repository_owner }}/taskboard-frontend > /dev/null
+          echo "Kubernetes deployment manifests validated successfully!"
