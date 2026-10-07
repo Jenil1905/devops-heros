@@ -63,20 +63,12 @@ jobs:
           docker build -t ghcr.io/${{ env.OWNER_LC }}/taskboard-frontend:${{ github.sha }} ./session21-python/frontend
 
       - name: Security Scan Backend with Trivy
-        uses: aquasecurity/trivy-action@0.30.0
-        with:
-          image-ref: ghcr.io/${{ env.OWNER_LC }}/taskboard-backend:${{ github.sha }}
-          severity: HIGH,CRITICAL
-          ignore-unfixed: true
-          exit-code: '0'
+        run: |
+          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy:latest image --severity HIGH,CRITICAL --exit-code 0 ghcr.io/${{ env.OWNER_LC }}/taskboard-backend:${{ github.sha }}
 
       - name: Security Scan Frontend with Trivy
-        uses: aquasecurity/trivy-action@0.30.0
-        with:
-          image-ref: ghcr.io/${{ env.OWNER_LC }}/taskboard-frontend:${{ github.sha }}
-          severity: HIGH,CRITICAL
-          ignore-unfixed: true
-          exit-code: '0'
+        run: |
+          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy:latest image --severity HIGH,CRITICAL --exit-code 0 ghcr.io/${{ env.OWNER_LC }}/taskboard-frontend:${{ github.sha }}
 
       - name: Push images to GitHub Container Registry
         run: |
