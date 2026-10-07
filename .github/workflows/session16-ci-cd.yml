@@ -1,0 +1,80 @@
+name: Session 16 - Calculator CI/CD Pipeline
+
+on:
+  push:
+    paths:
+      - 'session-16-github-actions/**'
+      - '.github/workflows/session16-ci-cd.yml'
+  workflow_dispatch:
+
+defaults:
+  run:
+    working-directory: session-16-github-actions/task/calculator-cicd
+
+jobs:
+  test:
+    name: Test Application
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run Unit Tests
+        run: |
+          pytest -v
+
+  build:
+    name: Build Application & Artifacts
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Execute Build Script
+        run: |
+          chmod +x build.sh
+          ./build.sh
+
+      - name: Inspect Build Output
+        run: |
+          cat build/build-info.txt
+
+      - name: Upload Build Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: calculator-build
+          path: session-16-github-actions/task/calculator-cicd/build/
+          retention-days: 7
+
+  docker:
+    name: Docker Build & Package
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      - name: Build Docker Image
+        run: |
+          docker build -t session16-calculator:${{ github.sha }} .
+          docker tag session16-calculator:${{ github.sha }} session16-calculator:latest
+
+      - name: Verify Docker Image
+        run: |
+          docker images | grep session16-calculator

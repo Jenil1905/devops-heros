@@ -1,0 +1,94 @@
+name: Calculator CI/CD Pipeline
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+  workflow_dispatch:
+
+jobs:
+  # -------------------------------------------------------------------------
+  # 1. CI - TEST JOB
+  # -------------------------------------------------------------------------
+  test:
+    name: Test Application
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run Unit Tests
+        run: |
+          pytest -v
+
+  # -------------------------------------------------------------------------
+  # 2. CI - BUILD & ARTIFACT JOB
+  # -------------------------------------------------------------------------
+  build:
+    name: Build Application & Artifacts
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Execute Build Script
+        run: |
+          chmod +x build.sh
+          ./build.sh
+
+      - name: Inspect Build Output
+        run: |
+          cat build/build-info.txt
+
+      - name: Upload Build Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: calculator-build
+          path: build/
+          retention-days: 7
+
+  # -------------------------------------------------------------------------
+  # 3. CD - DOCKER CONTAINERIZATION JOB
+  # -------------------------------------------------------------------------
+  docker:
+    name: Docker Build & Package
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      - name: Download Build Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: calculator-build
+          path: build/
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build Docker Image
+        run: |
+          docker build -t session16-calculator:${{ github.sha }} .
+          docker tag session16-calculator:${{ github.sha }} session16-calculator:latest
+
+      - name: Verify Docker Image
+        run: |
+          docker images | grep session16-calculator
