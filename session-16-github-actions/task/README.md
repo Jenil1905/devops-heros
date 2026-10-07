@@ -375,14 +375,40 @@ docker images | grep session16-calculator
 
 ### 5.4 GitHub Actions Cloud Execution
 
-Upon pushing to GitHub, the workflow triggers automatically, executing the entire CI/CD pipeline on GitHub-hosted runners:
+Upon pushing commit `e0caf33` to GitHub on branch `task`, the workflow triggered automatically and executed all 3 stages on GitHub-hosted runners in **46 seconds**:
 
 ![04-github-actions-pipeline-run](screenshots/04-github-actions-pipeline-run.png)
-*Figure 5.4: Successful execution of the automated GitHub Actions CI/CD workflow showing all jobs green and the uploaded build artifact.*
+*Figure 5.4: Successful execution of the automated GitHub Actions CI/CD workflow in repository `Jenil1905/devops-heros` showing all jobs green and the uploaded build artifact.*
+
+#### Pipeline Run Metrics:
+- **Repository:** `Jenil1905 / devops-heros`
+- **Workflow:** `Session 16 - Calculator CI/CD Pipeline` (`session16-ci-cd.yml`)
+- **Run ID:** `#1` (`feat(session-16): add calculator demo project, CI/CD workflow, docume...`)
+- **Trigger:** Push to branch `task` (`e0caf33`)
+- **Status:** **`Success` (100% Passed)**
+- **Total Duration:** **46 seconds**
+- **Artifacts Published:** **1** (`calculator-build`)
+
+| Job Name | Duration | Status | Key Actions Performed |
+| :--- | :--- | :--- | :--- |
+| **Test Application** | 10s | ✅ Passed | Code checkout, Python 3.12 setup, `pytest -v` |
+| **Build Application & Artifacts** | 9s | ✅ Passed | `./build.sh` packaging, `actions/upload-artifact@v4` |
+| **Docker Build & Package** | 15s | ✅ Passed | Docker Buildx, image build & tag `session16-calculator:latest` |
 
 ---
 
-## 6. Summary of Commands
+## 6. Screenshot Evidence Index
+
+| # | Screenshot Filename | Subject / Stage | Execution Evidence |
+|---|---------------------|-----------------|-------------------|
+| 1 | `01-unit-tests-pytest.png` | CI - Unit Tests | `pytest -v` passing all 5 tests (100%) |
+| 2 | `02-application-build-and-artifact.png` | CI - Build & Artifact | `./build.sh` execution and `build-info.txt` creation |
+| 3 | `03-docker-build-and-image-package.png` | CD - Container Packaging | `docker build` creating `session16-calculator:latest` |
+| 4 | `04-github-actions-pipeline-run.png` | Cloud CI/CD Execution | GitHub Actions visual graph (46s, 3 jobs green, 1 artifact) |
+
+---
+
+## 7. Summary of Commands
 
 | Action | Command | Purpose |
 | :--- | :--- | :--- |
